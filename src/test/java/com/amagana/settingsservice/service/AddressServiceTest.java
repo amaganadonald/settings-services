@@ -24,7 +24,7 @@ import com.amagana.settingsservice.repository.AddressRepository;
 import com.amagana.settingsservice.services.impl.AddressServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-public class AddressServiceTest {
+class AddressServiceTest {
 
 	@Mock
 	AddressRepository addressRepository;

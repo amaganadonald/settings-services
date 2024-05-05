@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/Category")
+@RequestMapping("/api/v1/category")
 @Slf4j
 public class CategoryRestController {
 
@@ -33,67 +33,43 @@ public class CategoryRestController {
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<ApiResponse<?>> getAllCategory() {
+	public ResponseEntity<ApiResponse<List<CategoryResponseDTO>>> getAllCategory() {
 		List<CategoryResponseDTO> category = categoryService.getAllCategory();
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(category)
-				.build();
 		log.info("CategoryRestController:getAllCategory end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.list(StatusResponse.SUCCESS, category), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<?>> getCategoryById(@PathVariable Long id) {
+	public ResponseEntity<ApiResponse<CategoryResponseDTO>> getCategoryById(@PathVariable Long id) {
 		log.info("CategoryRestController:getCategoryById starting call service for retrieving Category with id {}", id);
 		CategoryResponseDTO category = categoryService.getCategoryById(id);
-		log.info("CategoryRestController:getCategoryById start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(category)
-				.build();
 		log.info("CategoryRestController:getCategoryById end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.FOUND);
+		return new ResponseEntity<>(ApiResponse.single(StatusResponse.SUCCESS, category), HttpStatus.FOUND);
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiResponse<?>> addCategory(@RequestBody CategoryRequestDTO categoryResquestDTO) {
+	public ResponseEntity<ApiResponse<CategoryResponseDTO>> addCategory(@RequestBody CategoryRequestDTO categoryResquestDTO) {
 		log.info("CategoryRestController:addCategory starting call service for add  Category");
 		CategoryResponseDTO category = categoryService.addCategory(categoryResquestDTO);
-		log.info("CategoryRestController:addCategory start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(category)
-				.build();
 		log.info("CategoryRestController:addCategory end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
+		return new ResponseEntity<>(ApiResponse.single(StatusResponse.SUCCESS, category), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponse<?>> updateCatgory(@PathVariable Long id, 
+	public ResponseEntity<ApiResponse<CategoryResponseDTO>> updateCatgory(@PathVariable Long id, 
 			@RequestBody CategoryRequestDTO categoryResquestDTO) {
 		log.info("CategoryRestController:updateCatgory starting call service for updated Catgory with id {}", id);
 		CategoryResponseDTO category = categoryService.updateCategory(categoryResquestDTO, id);
-		log.info("CategoryRestController:updateCatgory start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(category)
-				.build();
 		log.info("CategoryRestController:updateCatgory end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.single(StatusResponse.SUCCESS, category), HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponse<?>> deleteCatgory(@PathVariable Long id) {
+	public ResponseEntity<ApiResponse<CategoryResponseDTO>> deleteCatgory(@PathVariable Long id) {
 		log.info("CategoryRestController:deleteCatgory starting call service for delete Catgory with id {}", id);
 		categoryService.deleteCategory(id);
-		log.info("CategoryRestController:deleteCatgory start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.message("Catgory deleted successfull")
-				.build();
 		log.info("CategoryRestController:deleteCatgory end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.singleMessage(StatusResponse.SUCCESS, "Catgory deleted successfull"), HttpStatus.OK);
 	}
 	
 	@GetMapping("/fgc/{id}")

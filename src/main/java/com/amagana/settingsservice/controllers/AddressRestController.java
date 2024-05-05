@@ -32,81 +32,43 @@ public class AddressRestController {
 	private AddressService addressService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<?>> getAllAddress() {
+	public ResponseEntity<ApiResponse<List<AddressResponseDTO>>> getAllAddress() {
 		log.info("AddressRestController:getAllAddress starting call service for retrieving all Address");
 		List<AddressResponseDTO> addressResponseDTO = addressService.getAllAddress();
-		log.info("AddressRestController:getAllAddress start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(addressResponseDTO)
-				.build();
 		log.info("AddressRestController:getAllAddress end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.list(StatusResponse.SUCCESS, addressResponseDTO), HttpStatus.OK);
 	}
-	
-	/*@GetMapping("/page")
-	public ResponseEntity<ApiResponse<?>> getAllAddressByPage(@RequestParam(defaultValue="0") int page, @RequestParam(defaultValue = "10") int size) {
-		log.info("AddressRestController:getAllAddressByPage starting call service for retrieving Address by page size");
-		Page<AddressResponseDTO> addressResponseDTO = addressService.getAllAddressPage(page, size);
-		log.info("AddressRestController:getAllAddressByPage start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusError.SUCCESS)
-				.results(addressResponseDTO)
-				.build();
-		log.info("AddressRestController:getAllAddressByPage end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-	}*/
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<?>> getAddressById(@PathVariable Long id) {
+	public ResponseEntity<ApiResponse<AddressResponseDTO>> getAddressById(@PathVariable Long id) {
 		log.info("AddressRestController:getAddressById starting call service for retrieving addresse with id {}", id);
 		AddressResponseDTO addressResponseDTO = addressService.getAddressById(id);
-		log.info("AddressRestController:getAddressById start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(addressResponseDTO)
-				.build();
 		log.info("AddressRestController:getAddressById end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.single(StatusResponse.SUCCESS, addressResponseDTO), HttpStatus.FOUND);
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<?>> addAddress(@RequestBody @Valid AddressRequestDTO addressRequestDTO) {
+	public ResponseEntity<ApiResponse<AddressResponseDTO>> addAddress(@RequestBody @Valid AddressRequestDTO addressRequestDTO) {
 		log.info("AddressRestController:addAddress starting call service for add  Address");
 		AddressResponseDTO addressResponseDTO = addressService.addAddress(addressRequestDTO);
-		log.info("AddressRestController:addAddress start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(addressResponseDTO)
-				.build();
 		log.info("AddressRestController:addAddress end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.single(StatusResponse.SUCCESS, addressResponseDTO), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponse<?>> updateAddress(@RequestBody @Valid AddressRequestDTO addressRequestDTO ,@PathVariable Long id) {
+	public ResponseEntity<ApiResponse<AddressResponseDTO>> updateAddress(@RequestBody @Valid AddressRequestDTO addressRequestDTO ,@PathVariable Long id) {
 		log.info("AddressRestController:updateAddress starting call service for updated  Address with id {}", id);
 		AddressResponseDTO addressResponseDTO = addressService.updateAddress(addressRequestDTO, id);
-		log.info("AddressRestController:updateAddress start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.results(addressResponseDTO)
-				.build();
 		log.info("AddressRestController:updateAddress end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.single(StatusResponse.SUCCESS, addressResponseDTO), HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponse<?>> deleteAddress(@PathVariable Long id) {
+	public ResponseEntity<ApiResponse<AddressResponseDTO>> deleteAddress(@PathVariable Long id) {
 		log.info("AddressRestController:deleteAddress starting call service for delete Address with id {}", id);
 		addressService.deleteAddress(id);
-		log.info("AddressRestController:deleteAddress start contruction response");
-		ApiResponse<?> apiResponse = ApiResponse.builder()
-				.status(StatusResponse.SUCCESS)
-				.message("Address deleted successfull")
-				.build();
 		log.info("AddressRestController:deleteAddress end contruction response");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.singleMessage(StatusResponse.SUCCESS, "Address deleted successfull"), HttpStatus.OK);
 	}
 
 	@GetMapping("/ofc/{id}")

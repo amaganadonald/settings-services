@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.amagana.settingsservice.models.Category;
 
 @ExtendWith(MockitoExtension.class)
-public class CategoryRepositoryTest {
+class CategoryRepositoryTest {
 
 	@Mock
 	CategoryRepository categoryRepository;

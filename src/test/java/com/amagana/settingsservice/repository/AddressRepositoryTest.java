@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.amagana.settingsservice.models.Address;
 
 @ExtendWith(MockitoExtension.class)
-public class AddressRepositoryTest {
+class AddressRepositoryTest {
 	
 	@Mock
 	AddressRepository addressRepository;

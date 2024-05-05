@@ -8,6 +8,9 @@ import com.amagana.settingsservice.models.Address;
 
 public class AddressMapper {
 	
+	private AddressMapper() {
+		
+	}
 	public static Address addressDtoToAddress(AddressRequestDTO addressRequestDTO) {
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(addressRequestDTO, Address.class);

@@ -26,7 +26,7 @@ import com.amagana.settingsservice.repository.CategoryRepository;
 import com.amagana.settingsservice.services.impl.CategoryServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-public class CategoryServiceTest {
+class CategoryServiceTest {
 
 	@Mock
 	CategoryRepository categoryRepository;

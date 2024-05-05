@@ -9,6 +9,9 @@ import com.amagana.settingsservice.models.Category;
 
 public class CategoryMapper {
 	
+	private CategoryMapper() {
+		
+	}
 	public static Category categoryRequestDTOToCategory(CategoryRequestDTO categoryRequestDTO) {
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(categoryRequestDTO, Category.class);

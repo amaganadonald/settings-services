@@ -31,7 +31,6 @@ public class AddressServiceImpl implements AddressService{
 		return addressRepository.findAll()
 				.stream()
 				.map(AddressMapper::addressToAddressResponseDTO)
-				.peek(add->log.info("Successfully fecth all address with value {} ", add))
 				.toList();
 	}
 	
