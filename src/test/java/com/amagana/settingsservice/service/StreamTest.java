@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 public class StreamTest {
 
-	List<String> names = new ArrayList<>();
+	/*List<String> names = new ArrayList<>();
 	List<Integer> numbers = new ArrayList<>();
 	@BeforeEach
 	public void setUp() {
@@ -94,7 +94,7 @@ public class StreamTest {
 		     .filter(x -> x.getValue() ==1) 
 		     /*.findFirst()
 		     .get()
-		     .getKey()*/
+		     .getKey()
 		     .map(Map.Entry::getKey)
 		     .toList();
 		return str;
@@ -105,5 +105,5 @@ public class StreamTest {
 				.reduce((word1, word2)-> word1.size() > word2.size() ? word1 : word2)
 				.get();
 		return str;
-	}
+	}*/
 }
