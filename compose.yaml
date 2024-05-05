@@ -1,0 +1,25 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    environment:
+      - 'POSTGRES_DB=settings-service'
+      - 'POSTGRES_PASSWORD=donald'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      
+  pgadmin4:
+    image: 'elestio/pgadmin'
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: donald9do@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: donald
+      PGADMIN_LISTEN_PORT: 4000
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json

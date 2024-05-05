@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: SETTINGS-SERVICE
+    
+  datasource:
+    url: jdbc:postgresql://localhost:5432/settings_service
+    username: postgres
+    password: donald
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        generate_statistics: true
+      
+    show-sql: true
+  cloud:
+    discovery:
+      enabled: false
+    config:
+      enabled: false
+server:
+  port: 9891
+
+management:
+  health:
+    refresh:
+      enabled: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        orm:
+          jdbc:
+            bind: TRACE
