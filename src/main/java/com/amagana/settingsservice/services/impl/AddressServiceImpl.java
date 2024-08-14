@@ -2,8 +2,10 @@ package com.amagana.settingsservice.services.impl;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.amagana.settingsservice.dto.AddressRequestDTO;
 import com.amagana.settingsservice.dto.AddressResponseDTO;
@@ -13,14 +15,13 @@ import com.amagana.settingsservice.models.Address;
 import com.amagana.settingsservice.repository.AddressRepository;
 import com.amagana.settingsservice.services.AddressService;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
 @Slf4j
-@Transactional
+@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 public class AddressServiceImpl implements AddressService{
 
 	private AddressRepository addressRepository;
@@ -35,19 +36,19 @@ public class AddressServiceImpl implements AddressService{
 	}
 	
 	public Address getAddressByIds(Long id) {
-		log.info("AddressServie:getAddressById starting to fetch address by id {} ", id);
+		log.info("AddressServie:getAddressById starting to fetch address by id: "+id);
 		 if (id == null || id <= 0) {
 	            throw new IllegalArgumentException("Invalid user ID");
 	        }
 
 		try {
 			Optional<Address> address = addressRepository.findById(id);
-			log.info("AddressServie:getAddressById fetch address with message {} ", address.toString());
+			log.info("AddressServie:getAddressById fetch address with message::"+address.toString());
 			return address.get();
 			
 		} catch (Exception e) {
-			log.error("AddressServie:getAddressById fetch address by id faile with message {} ", e.getMessage());
-			throw new SettingsServiceBussnessException("fetch address by id faile with message {} " + e.getMessage());
+			log.error("AddressServie:getAddressById fetch address by id faile with message::"+ e.getMessage());
+			throw new SettingsServiceBussnessException("fetch address by id faile with message::" + e.getMessage());
 		}
 		
 	}
@@ -65,8 +66,8 @@ public class AddressServiceImpl implements AddressService{
 			addressRepository.save(address);
 			return AddressMapper.addressToAddressResponseDTO(address);
 		} catch (Exception e) {
-			log.error("AddressServie:addAddress add address failed with message {} ", e.getMessage());
-			throw new SettingsServiceBussnessException("add address failed with message {} " + e.getMessage());
+			log.error("AddressServie:addAddress add address failed with message::"+e.getMessage());
+			throw new SettingsServiceBussnessException("add address failed with message::" + e.getMessage());
 		}
 	}
 
@@ -82,8 +83,8 @@ public class AddressServiceImpl implements AddressService{
 			address.setAddressProfessionalPhone(address.getAddressProfessionalPhone());
 			addressRepository.save(address);
 		} catch (Exception e) {
-			log.error("AddressServie:updateAddress update address by id failed with message {} ", e.getMessage());
-			throw new SettingsServiceBussnessException("update address by id failed with message {} " + e.getMessage());
+			log.error("AddressServie:updateAddress update address by id failed with message"+ e.getMessage());
+			throw new SettingsServiceBussnessException("update address by id failed with message::" + e.getMessage());
 		}
 		return AddressMapper.addressToAddressResponseDTO(address);
 	}
@@ -95,7 +96,7 @@ public class AddressServiceImpl implements AddressService{
 			addressRepository.delete(address);
 		} catch (Exception e) {
 			log.error("Error deleted address with message {}", e.getMessage());
-			throw new SettingsServiceBussnessException("Error deleted address with message" + e.getMessage());
+			throw new SettingsServiceBussnessException("Error deleted address with message::" + e.getMessage());
 		}
 		return null;
 	}

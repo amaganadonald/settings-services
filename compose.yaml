@@ -1,5 +1,21 @@
-version: '3'
 services:
+  eureka-server:
+    build:
+      context: ../eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - '8761:8761'
+  gateway:
+    build:
+      context: ../api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - '9890:9890'
+    depends_on: 
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761
+      #SPRING_CLOUD_CONFIG_URI: http://config-server:8888
   postgres:
     image: 'postgres'
     restart: always
@@ -38,6 +54,22 @@ services:
       - sonarqube_logs:/opt/sonarqube/logs
     ports:
       - "9000:9000"
+ ## prometheus:
+  #  image: bitnami/prometheus
+ #   container_name: prometheus
+  #  command:
+  #    - '--config.file=/etc/prometheus.yml'
+  #  ports:
+  #    - 9090:9090
+  #  restart: unless-stopped
+  #  volumes:
+  #    - ./prometheus:/etc/prometheus
+  #grafana:
+  #  image: grafana/grafana
+  #  ports:
+  #    - "3000:3000"
+  #  volumes:
+  #    - ./grafana/tmp:/var/lib/grafana
 
 volumes:
   sonarqube_data:

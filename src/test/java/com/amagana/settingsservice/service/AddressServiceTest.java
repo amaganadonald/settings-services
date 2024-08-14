@@ -15,12 +15,15 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 import com.amagana.settingsservice.dto.AddressRequestDTO;
 import com.amagana.settingsservice.dto.AddressResponseDTO;
 import com.amagana.settingsservice.mappers.AddressMapper;
 import com.amagana.settingsservice.models.Address;
 import com.amagana.settingsservice.repository.AddressRepository;
+import com.amagana.settingsservice.services.AddressService;
 import com.amagana.settingsservice.services.impl.AddressServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -72,6 +75,15 @@ class AddressServiceTest {
 	@AfterEach
 	void cleanUp() {
 		mockStatic.close();
+	}
+
+	@Autowired
+	private ApplicationContext context;
+	@Test
+	void singletonBeanScopeTest() {
+		AddressService addressService = context.getBean("AddressService", AddressService.class);
+		AddressService addressService2 = context.getBean("AddressService", AddressService.class);
+		assertEquals(addressService, addressService2);
 	}
 	
 	@Test

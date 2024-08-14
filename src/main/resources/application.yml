@@ -3,7 +3,7 @@ spring:
     name: SETTINGS-SERVICE
     
   datasource:
-    url: jdbc:postgresql://localhost:5432/settings_service
+    url: jdbc:postgresql://postgres1:5432/settings_service
     username: postgres
     password: donald
     
@@ -19,7 +19,7 @@ spring:
     show-sql: true
   cloud:
     discovery:
-      enabled: false
+      enabled: true
     config:
       enabled: false
 server:
@@ -29,6 +29,19 @@ management:
   health:
     refresh:
       enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+    metrics:
+      enable: true
+  prometheus:
+    metrics:
+      export:
+        enable: true
+
 logging:
   level:
     org:
@@ -37,3 +50,5 @@ logging:
         orm:
           jdbc:
             bind: TRACE
+  file:
+    path /src/main/resources/tmp

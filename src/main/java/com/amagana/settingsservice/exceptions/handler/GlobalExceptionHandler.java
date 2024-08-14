@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 		List<ErrorsDTO> errors = exception.getBindingResult().getFieldErrors().stream()
 		         .map(error->new ErrorsDTO(error.getField(), error.getDefaultMessage()))
 		         .toList();
-		log.error("Error message {} ",errors);
+		log.error("Error message::"+errors);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.errors(StatusResponse.FAILED,
 				"Error occur when validation field", errors));
 	}
