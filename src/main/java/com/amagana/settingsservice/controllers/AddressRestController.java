@@ -58,7 +58,7 @@ public class AddressRestController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ApiResponse<AddressResponseDTO>> deleteAddress(@PathVariable Long id) {
 		addressService.deleteAddress(id);
-		return new ResponseEntity<>(ApiResponse.singleMessage(StatusResponse.SUCCESS, "Address deleted successfull"), HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.singleMessage(StatusResponse.SUCCESS, "Address deleted successfully"), HttpStatus.OK);
 	}
 
 	@GetMapping("/ofc/{id}")

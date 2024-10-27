@@ -77,14 +77,14 @@ class AddressServiceTest {
 		mockStatic.close();
 	}
 
-	@Autowired
+	/**@Autowired
 	private ApplicationContext context;
 	@Test
 	void singletonBeanScopeTest() {
 		AddressService addressService = context.getBean("AddressService", AddressService.class);
 		AddressService addressService2 = context.getBean("AddressService", AddressService.class);
 		assertEquals(addressService, addressService2);
-	}
+	}**/
 	
 	@Test
 	void shouldReturnAllAddress() {

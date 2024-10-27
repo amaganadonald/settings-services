@@ -1,54 +1,13 @@
 spring:
   application:
     name: SETTINGS-SERVICE
-    
-  datasource:
-    url: jdbc:postgresql://postgres1:5432/settings_service
-    username: postgres
-    password: donald
-    
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        highlight_sql: true
-        generate_statistics: true
-      
-    show-sql: true
   cloud:
-    discovery:
-      enabled: true
     config:
-      enabled: false
+      uri: ${SPRING_CONFIG_URI}
+  config:
+    import: optional:configserver:${SPRING_CONFIG_URI}
+
 server:
   port: 9891
 
-management:
-  health:
-    refresh:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-    health:
-      show-details: always
-    metrics:
-      enable: true
-  prometheus:
-    metrics:
-      export:
-        enable: true
 
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        orm:
-          jdbc:
-            bind: TRACE
-  file:
-    path /src/main/resources/tmp

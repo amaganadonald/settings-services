@@ -121,7 +121,7 @@ class AddressControllerTest {
                  .andDo(print())
 		         .andExpect(status().isOk())
 	             .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("SUCCESS"))
-	             .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Address deleted successfull"));
+	             .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Address deleted successfully"));
 
 	}
 
