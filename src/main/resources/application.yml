@@ -1,11 +1,12 @@
 spring:
   application:
     name: SETTINGS-SERVICE
+  config:
+    import: optional:configserver:${CONFIG_SERVICE_URI}
   cloud:
     config:
-      uri: ${SPRING_CONFIG_URI}
-  config:
-    import: optional:configserver:${SPRING_CONFIG_URI}
+      uri: ${CONFIG_SERVICE_URI}
+
 
 server:
   port: 9891
